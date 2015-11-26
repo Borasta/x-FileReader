@@ -1,0 +1,92 @@
+section.content {
+    width: 60em;
+}
+
+section.content > article {
+    display: none;
+}
+
+body {
+    padding:100px;
+}
+.tabs {
+    height:45px;
+    padding: 0 0 0 0;
+    overflow:visible;
+    cursor: default;
+}
+
+.tab {
+    width:200px;
+    height:45px;
+    overflow:hidden;
+    float:left;
+    margin: 0 -20px -3px -4px;
+}
+
+.tab-box {
+    height:50px;
+    background: #fff;
+    border-radius: 4px;
+    border:1px solid #ccc;
+    margin:0 10px 0;
+    box-shadow: 0 0 2px  #fff inset;
+    padding-top: 1em;
+    text-align: center;
+
+    -webkit-transform: perspective(100px) rotateX(30deg);
+    -moz-transform: perspective(100px) rotateX(30deg);
+
+}
+
+.tabN {
+    width:50px;
+    height:45px;
+    overflow:hidden;
+    float:left;
+    margin: 0;
+}
+
+.tab-boxN {
+    width: 1.8em;
+    height: 20px;
+    background: #fff;
+    border-radius: 4px;
+    border:1px solid #ccc;
+    margin: 15px 15px 0;
+    box-shadow: 0 0 2px  #fff inset;
+    padding-top: 0.2em;
+    text-align: center;
+
+    transform: skew(20deg);
+}
+
+.tab.active {
+    z-index:40;
+    position:relative;
+    padding-bottom:1px;
+}
+.tab.active .tab-box{
+    background-color: #eee;
+@include background-image(linear-gradient(top, #ccc , #ddd 3%, rgba(#eee, 0.5)  ));
+    box-shadow: 0 0 2px 0 #fff inset;
+}
+
+.content {
+    position:relative;
+    /*width: 33.5em;*/
+    width: 100%;
+    height: 10em;
+    z-index:1;
+    padding: 6.3em;
+    border:1px solid #ccc;
+    border-top-color: transparent;
+    background:#eee;
+    overflow: auto;
+}
+
+.close:hover {
+    border-radius: 10em;
+    color: white;
+    background-color: red;
+}
