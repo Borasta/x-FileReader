@@ -1,4 +1,6 @@
-window.addEventListener("load", function() {
+var XFileTab;
+
+(function() {
 
     var XFileTabProto = Object.create( HTMLElement.prototype );
 
@@ -28,7 +30,7 @@ window.addEventListener("load", function() {
             var reader = new FileReader();
             var fileName = archivo.name;
             reader.readAsText(archivo);
-            reader.addEvent("load", function(d) {
+            reader.addEventListener("load", function(d) {
                 addTab( fileName, d.target.result );
             });
         });
@@ -70,7 +72,7 @@ window.addEventListener("load", function() {
 
             // Hacemos activo y mostramos el contenido que acabamos de crear
             element.addClass("tab" + num);
-
+            console.log(element.siblings())
             element.siblings().removeClass("active");
 
             element.siblings().o$(".tab-box").css("background-color", "#fff");
@@ -104,7 +106,7 @@ window.addEventListener("load", function() {
 
                 // Buscamos el div correspondiente al tab que clickeamos
                 var article = content.o$("article." + this.className.split(" ")[1]);
-                console.log(content)
+                console.log(content);
                 // y buscamos los hermanos de ese div
                 var hermanos = article.siblings();
 
@@ -127,16 +129,9 @@ window.addEventListener("load", function() {
         };
     };
 
-    var XFileTabs = document.registerElement("x-filetab", {
+    XFileTab = document.registerElement("x-filetab", {
         prototype: XFileTabProto
     });
 
-    var h = new XFileTabs();
-
-    document.body.appendChild(h);
-
-    document.body.appendChild(h.input);
-
-
-});
+})();
 
