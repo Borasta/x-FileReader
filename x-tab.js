@@ -131,4 +131,149 @@ var XFileTab;
         prototype: XFileTabProto
     });
 
+    var o$ = function(selector) {
+        var self = this === window ? document : this;
+
+        var elemento;
+
+        if( (selector[0] === "<") && (selector[selector.length - 1] === ">") ) {
+            var tag = selector.replace("<", "").replace(">", "");
+            var split = tag.split(" ");
+            var len = split.length;
+            elemento = split[0];
+            var attrs = [];
+            for( var i = 1; i < len; i++ ) {
+                var attr = split.pop();
+                if( attr !== elemento )
+                    attrs.push( attr );
+            }
+
+            elemento = document.createElement(elemento);
+
+            len = attrs.length;
+
+            for( i = 0; i < len; i ++ ) {
+                var atr = attrs[i].split("=");
+                elemento.attr( atr[0], atr[1].split(/["|']/)[1] );
+            }
+
+            if( self !== document )
+                this.appendChild(elemento);
+        }
+        else {
+            elemento = self.querySelectorAll( selector );
+            elemento = elemento.length > 1 ? elemento: elemento[0];
+        }
+
+        return elemento;
+    };
+
+    HTMLElement.prototype.o$ = o$;
+
+    NodeList.prototype.o$ = function( selector ) {
+        var list = this;
+        var aLen = list.length;
+        var result = document.createElement("div");
+        for( var i = 0; i < aLen; i++ ) {
+            var element = list[i].o$(selector);
+            if( element ) {
+                element.addClass("oQueryTempClass");
+                result.appendChild( element )
+            }
+        }
+        result = result.querySelectorAll(".oQueryTempClass");
+        result.removeClass("oQueryTempClass");
+        return result;
+    };
+
+    HTMLElement.prototype.remove = function() {
+        var parent = this.parentNode;
+        parent.removeChild(this);
+    };
+
+    NodeList.prototype.remove = function() {
+        var list = this;
+        var aLen = list.length;
+        for( var i = 0; i < aLen; i++ )
+            list[i].remove();
+    };
+
+    HTMLElement.prototype.attr = function( attribute, value ) {
+        if( typeof attribute == "object" ) {
+            for( var key in attribute ) {
+                this.setAttribute(key, attribute[key]);
+            }
+        }
+        else {
+            this.setAttribute(attribute, value);
+        }
+    };
+
+    NodeList.prototype.attr = function( attribute, value ) {
+        var list = this;
+        var aLen = list.length;
+        for( var i = 0; i < aLen; i++ )
+            list[i].attribute( attribute, value );
+    };
+
+    HTMLElement.prototype.css = function( style, value ) {
+        if( typeof style == "object" ) {
+            for( var key in style ) {
+                this.style[key] = style[key];
+            }
+        }
+        else {
+            this.style[style] = value;
+        }
+    };
+
+    NodeList.prototype.css = function( style, value ) {
+        var list = this;
+        var aLen = list.length;
+        for( var i = 0; i < aLen; i++ )
+            list[i].css( style, value );
+    };
+
+    HTMLElement.prototype.addClass = function( newClass ) {
+        this.classList.add(newClass);
+    };
+
+    NodeList.prototype.addClass = function( newClass ) {
+        var len = this.length;
+        for( var i = 0; i < len; i++ )
+            this[i].addClass(newClass);
+    };
+
+    HTMLElement.prototype.removeClass = function( classToRemove ) {
+        this.classList.remove( classToRemove );
+    };
+
+    NodeList.prototype.removeClass = function( classToRemove ) {
+        var len = this.length;
+        for( var i = 0; i < len; i++ )
+            this[i].removeClass( classToRemove );
+    };
+
+    HTMLElement.prototype.removeAllClass = function() {
+        this.className = "";
+    };
+
+    NodeList.prototype.removeAllClass = function() {
+        var len = this.length;
+        for( var i = 0; i < len; i++ )
+            this[i].removeAllClass();
+    };
+
+    HTMLElement.prototype.haveClass = function( haveit ) {
+        return this.classList.contains( haveit );
+    };
+
+    NodeList.prototype.haveClass = function( haveit ) {
+        var len = this.length;
+        var result = [];
+        for( var i = 0; i < len; i++ )
+            result.push( this[i].haveClass( haveit ) );
+        return result;
+    };
+
 })();
