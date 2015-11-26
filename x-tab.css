@@ -1,22 +1,19 @@
-section.content {
-    width: 60em;
-}
-
-section.content > article {
-    display: none;
+x-tab section {
+    width: 40em;
 }
 
 body {
     padding:100px;
 }
-.tabs {
+x-tab ul {
     height:45px;
     padding: 0 0 0 0;
+    margin-bottom: 0;
     overflow:visible;
     cursor: default;
 }
 
-.tab {
+x-tab .tab {
     width:200px;
     height:45px;
     overflow:hidden;
@@ -24,7 +21,7 @@ body {
     margin: 0 -20px -3px -4px;
 }
 
-.tab-box {
+x-tab .tab-cont {
     height:50px;
     background: #fff;
     border-radius: 4px;
@@ -33,13 +30,31 @@ body {
     box-shadow: 0 0 2px  #fff inset;
     padding-top: 1em;
     text-align: center;
+    overflow: hidden;
 
     -webkit-transform: perspective(100px) rotateX(30deg);
     -moz-transform: perspective(100px) rotateX(30deg);
 
 }
 
-.tabN {
+x-tab > ul > li.newTab > div.tab-cont-new {
+    background-color: #f0f0f0;
+}
+
+x-tab > ul > li.newTab > div.tab-cont-new > input {
+    margin-top: -20px;
+    display: block;
+    width: 30px;
+    height: 20px;
+    opacity: 0;
+    overflow: hidden;
+}
+
+x-tab > ul > li.newTab > div.tab-cont-new:hover {
+    background-color: #f8f8f8;
+}
+
+x-tab .newTab {
     width:50px;
     height:45px;
     overflow:hidden;
@@ -47,7 +62,7 @@ body {
     margin: 0;
 }
 
-.tab-boxN {
+x-tab .tab-cont-new {
     width: 1.8em;
     height: 20px;
     background: #fff;
@@ -61,31 +76,31 @@ body {
     transform: skew(20deg);
 }
 
-.tab.active {
+x-tab .tab.active {
     z-index:40;
     position:relative;
     padding-bottom:1px;
 }
-.tab.active .tab-box{
+
+x-tab .tab.active .tab-cont{
     background-color: #eee;
-@include background-image(linear-gradient(top, #ccc , #ddd 3%, rgba(#eee, 0.5)  ));
+    @include background-image(linear-gradient(top, #ccc , #ddd 3%, rgba(#eee, 0.5)  ));
     box-shadow: 0 0 2px 0 #fff inset;
 }
 
-.content {
+x-tab > section {
     position:relative;
     /*width: 33.5em;*/
-    width: 100%;
     height: 10em;
     z-index:1;
-    padding: 6.3em;
+    padding: 6em;
     border:1px solid #ccc;
     border-top-color: transparent;
     background:#eee;
     overflow: auto;
 }
 
-.close:hover {
+x-tab > ul > li > div > .close:hover {
     border-radius: 10em;
     color: white;
     background-color: red;
